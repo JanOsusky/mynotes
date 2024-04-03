@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "293666456152",
+    "project_id": "mynotes-flutter-realproject",
+    "storage_bucket": "mynotes-flutter-realproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293666456152:android:59519d2dd4f1d49dae802d",
+        "android_client_info": {
+          "package_name": "com.learnapp.mynotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAINbN8X80aYtO4BM6p8MU3Iu98PQ7X0wI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
