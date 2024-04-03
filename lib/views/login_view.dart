@@ -33,69 +33,65 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
-        backgroundColor: Colors.blue,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Column(
-                children: [
-                  TextField(
-                    controller: _email,
-                    decoration: InputDecoration(
-                      hintText: 'Enter your email here',
-                    ),
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  TextField(
-                    controller: _passport,
-                    decoration: InputDecoration(
-                      hintText: 'Enter your passport here',
-                    ),
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      final email = _email.text;
-                      final password = _passport.text;
-                      try {
-                        final userCredential = await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                          email: email,
-                          password: password,
-                        );
-                        print(userCredential);
-                      } on FirebaseAuthException catch (e) {
-                        print(e.code);
-                        if (e.code == 'invalid-credential') {
-                          print("invalid credential");
-                        } else if (e.code == 'wrong-password') {
-                          print('Wrong passpord');
-                        } else if (e.code == 'user-not-found') {
-                          print('User not found');
-                        }
-                      } catch (e) {
-                        print("something bad happened");
-                        print(e.runtimeType);
-                        print(e);
-                      }
-                    },
-                    child: const Text('Login'),
-                  ),
-                ],
+      body: Column(
+        children: [
+          TextField(
+            controller: _email,
+            decoration: InputDecoration(
+              hintText: 'Enter your email here',
+            ),
+            enableSuggestions: false,
+            autocorrect: false,
+            keyboardType: TextInputType.emailAddress,
+          ),
+          TextField(
+            controller: _passport,
+            decoration: InputDecoration(
+              hintText: 'Enter your passport here',
+            ),
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+          ),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _passport.text;
+              try {
+                final userCredential =
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+                print(userCredential);
+              } on FirebaseAuthException catch (e) {
+                print(e.code);
+                if (e.code == 'invalid-credential') {
+                  print("invalid credential");
+                } else if (e.code == 'wrong-password') {
+                  print('Wrong passpord');
+                } else if (e.code == 'user-not-found') {
+                  print('User not found');
+                }
+              } catch (e) {
+                print("something bad happened");
+                print(e.runtimeType);
+                print(e);
+              }
+            },
+            child: const Text('Login'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/register/',
+                (route) => false,
               );
-            default:
-              return const Text('Loading...');
-          }
-        },
+            },
+            child: const Text('Not registered yet? Register here!'),
+          )
+        ],
       ),
     );
   }
