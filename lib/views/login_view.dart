@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/firebase_options.dart';
+import 'dart:developer' as devtools show log;
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -38,7 +39,7 @@ class _LoginViewState extends State<LoginView> {
         children: [
           TextField(
             controller: _email,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Enter your email here',
             ),
             enableSuggestions: false,
@@ -47,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextField(
             controller: _passport,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Enter your passport here',
             ),
             obscureText: true,
@@ -59,25 +60,27 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _passport.text;
               try {
-                final userCredential =
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
                   email: email,
                   password: password,
                 );
-                print(userCredential);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/notes/',
+                  (route) => false,
+                );
               } on FirebaseAuthException catch (e) {
-                print(e.code);
+                devtools.log(e.code);
                 if (e.code == 'invalid-credential') {
-                  print("invalid credential");
+                  devtools.log("invalid credential");
                 } else if (e.code == 'wrong-password') {
-                  print('Wrong passpord');
+                  devtools.log('Wrong passpord');
                 } else if (e.code == 'user-not-found') {
-                  print('User not found');
+                  devtools.log('User not found');
                 }
               } catch (e) {
-                print("something bad happened");
-                print(e.runtimeType);
-                print(e);
+                devtools.log("something bad happened");
+                devtools.log(e.runtimeType.toString());
+                devtools.log(e.toString());
               }
             },
             child: const Text('Login'),
