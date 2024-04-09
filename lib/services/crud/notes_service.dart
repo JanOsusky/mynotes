@@ -151,6 +151,7 @@ class NotesService {
   }
 
   Future<DatabaseUser> getUser({required String email}) async {
+    await _ensureDbIsOpen();
     final db = _getDatabaseOrThrow();
 
     final results = await db.query(
@@ -242,7 +243,7 @@ class NotesService {
       // create user table
       await db.execute(createUserTable);
       // create note table
-      await db.execute(createNOteTable);
+      await db.execute(createNoteTable);
       await _cacheNotes();
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentsException();
@@ -316,9 +317,9 @@ const createUserTable = ''' CREATE TABLE IF NOT EXISTS "user" (
       	"email"	TEXT NOT NULL UNIQUE,
       	PRIMARY KEY("id" AUTOINCREMENT)
       );''';
-const createNOteTable = '''CREATE TABLE IF NOT EXIST"note" (
+const createNoteTable = ''' CREATE TABLE IF NOT EXISTS "note" (
     	"id"	INTEGER NOT NULL,
-    	"user_id"	NUMERIC NOT NULL COLLATE UTF16CI,
+    	"user_id"	INTEGER NOT NULL,
     	"text"	TEXT,
     	"is_synced_with_cloud"	INTEGER NOT NULL DEFAULT 0,
     	PRIMARY KEY("id" AUTOINCREMENT),
