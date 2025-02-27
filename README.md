@@ -8,6 +8,13 @@ MyNotes is a simple and efficient note-taking app built with Flutter. It allows 
 - User-friendly interface
 - Cross-platform support (Android, iOS, Web)
 
+## Technologies Used
+- **Flutter**: Framework for building cross-platform applications
+- **Dart**: Programming language for Flutter development
+- **Firebase**: Backend services for authentication and data storage
+- **SQLite**: Local database for offline storage
+- **Provider**: State management solution
+
 ## Installation
 
 ### Prerequisites
@@ -47,9 +54,6 @@ my_notes/
 
 ## Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to change.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 
 
